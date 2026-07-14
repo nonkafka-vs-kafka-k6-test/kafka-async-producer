@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: kafka-async-producer
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/kafka_project?rewriteBatchedStatements=true&allowPublicKeyRetrieval=true
+    username: root
+    password: ${MYSQL_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false # 벤치마크 신뢰도 확보를 위한 로그 off (매우 탁월한 선택)
+
+  kafka:
+    bootstrap-servers:
+      - localhost:9092
+      - localhost:9094
+      - localhost:9096
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+      batch-size: 524288 # 512 KB
+
+      properties:
+        # 파티셔너 설정을 완전히 비워두거나 주석 처리하면 기본값인 스티키로 동작
+        # partitioner.class: org.apache.kafka.clients.producer.RoundRobinPartitioner
+        linger.ms: 50
+        buffer.memory: 67108864 # 64 MB
