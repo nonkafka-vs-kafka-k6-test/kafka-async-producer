@@ -21,6 +21,3 @@ spring:
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
-
-      properties:
-        linger.ms: 0   # 지연시간 최소화가 목적 → 배치 대기 없이 즉시 전송
